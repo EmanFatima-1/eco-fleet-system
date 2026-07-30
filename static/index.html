@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Eco-Fleet & Carbon Tracker</title>
+    <meta name="description" content="Manage fleet vehicles, log trips, and track carbon emissions in real time.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="logo-group">
+                <div class="logo-icon">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.4 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/>
+                        <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/>
+                    </svg>
+                </div>
+                <div>
+                    <h1 id="app-title">Smart Eco-Fleet & Carbon Tracker</h1>
+                    <p class="subtitle">Real-Time Fleet Management & Carbon Footprint Monitoring</p>
+                </div>
+            </div>
+            <div class="status-badge" id="system-status-badge">
+                <span class="status-dot"></span>
+                <span>System Online</span>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="dashboard-grid">
+            <!-- Analytics Summary Cards -->
+            <section class="analytics-row" aria-label="Fleet Analytics Summary">
+                <div class="stat-card emerald">
+                    <div class="stat-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                        </svg>
+                    </div>
+                    <div class="stat-details">
+                        <span class="stat-label">Total Carbon Emissions</span>
+                        <div class="stat-value"><span id="stat-total-emissions">0.00</span> <span class="unit">kg CO₂</span></div>
+                    </div>
+                </div>
+
+                <div class="stat-card cyan">
+                    <div class="stat-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="1" y="3" width="15" height="13" rx="2"/>
+                            <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/>
+                            <circle cx="5.5" cy="18.5" r="2.5"/>
+                            <circle cx="18.5" cy="18.5" r="2.5"/>
+                        </svg>
+                    </div>
+                    <div class="stat-details">
+                        <span class="stat-label">Registered Vehicles</span>
+                        <div class="stat-value" id="stat-total-vehicles">0</div>
+                    </div>
+                </div>
+
+                <div class="stat-card amber">
+                    <div class="stat-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+                        </svg>
+                    </div>
+                    <div class="stat-details">
+                        <span class="stat-label">Total Distance</span>
+                        <div class="stat-value"><span id="stat-total-distance">0.0</span> <span class="unit">km</span></div>
+                    </div>
+                </div>
+
+                <div class="stat-card purple">
+                    <div class="stat-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                            <polyline points="14 2 14 8 20 8"/>
+                            <line x1="16" y1="13" x2="8" y2="13"/>
+                            <line x1="16" y1="17" x2="8" y2="17"/>
+                            <polyline points="10 9 9 9 8 9"/>
+                        </svg>
+                    </div>
+                    <div class="stat-details">
+                        <span class="stat-label">Trips Logged</span>
+                        <div class="stat-value" id="stat-total-trips">0</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Action Forms Section -->
+            <div class="forms-container">
+                <!-- Register Vehicle Card -->
+                <section class="card-panel" id="register-vehicle-section">
+                    <div class="card-header">
+                        <h2>Register New Vehicle</h2>
+                        <p>Add EV, Diesel, Petrol, or Hybrid models to fleet</p>
+                    </div>
+                    <form id="vehicle-form" class="action-form">
+                        <div class="form-group">
+                            <label for="vehicle-name">Vehicle Name</label>
+                            <input type="text" id="vehicle-name" placeholder="e.g. EcoTruck Alpha" required>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="vehicle-type">Fuel / Power Type</label>
+                                <select id="vehicle-type" required>
+                                    <option value="EV">EV (Electric Vehicle)</option>
+                                    <option value="Diesel" selected>Diesel</option>
+                                    <option value="Petrol">Petrol</option>
+                                    <option value="Hybrid">Hybrid</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="fuel-capacity">Fuel/Battery Cap. (L/kWh)</label>
+                                <input type="number" step="0.1" id="fuel-capacity" placeholder="e.g. 80.0" required>
+                            </div>
+                        </div>
+                        <button type="submit" id="btn-register-vehicle" class="btn btn-primary">
+                            <span>Register Vehicle</span>
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                        </button>
+                    </form>
+                </section>
+
+                <!-- Record Trip Card -->
+                <section class="card-panel" id="record-trip-section">
+                    <div class="card-header">
+                        <h2>Log Vehicle Trip</h2>
+                        <p>Track distance, fuel, & calculate carbon output</p>
+                    </div>
+                    <form id="trip-form" class="action-form">
+                        <div class="form-group">
+                            <label for="trip-vehicle-select">Select Vehicle</label>
+                            <select id="trip-vehicle-select" required>
+                                <option value="" disabled selected>-- Select a Vehicle --</option>
+                            </select>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="trip-distance">Distance Traveled (km)</label>
+                                <input type="number" step="0.1" id="trip-distance" placeholder="e.g. 150.0" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="trip-fuel">Fuel Consumed (L)</label>
+                                <input type="number" step="0.1" id="trip-fuel" placeholder="e.g. 12.5" required>
+                            </div>
+                        </div>
+                        <button type="submit" id="btn-record-trip" class="btn btn-accent">
+                            <span>Calculate & Record Trip</span>
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                        </button>
+                    </form>
+                </section>
+            </div>
+
+            <!-- Fleet & Trips Tables Section -->
+            <div class="tables-container">
+                <!-- Fleet Vehicles List -->
+                <section class="card-panel table-panel">
+                    <div class="panel-header">
+                        <h2>Fleet Vehicles</h2>
+                        <span class="badge" id="vehicle-count-badge">0 vehicles</span>
+                    </div>
+                    <div class="table-wrapper">
+                        <table id="vehicles-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Vehicle Name</th>
+                                    <th>Type</th>
+                                    <th>Fuel Capacity</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="vehicles-table-body">
+                                <tr>
+                                    <td colspan="5" class="empty-state">No vehicles registered yet.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- Trip History Logs -->
+                <section class="card-panel table-panel">
+                    <div class="panel-header">
+                        <h2>Trip & Emissions History</h2>
+                        <span class="badge badge-emerald" id="trip-count-badge">0 trips</span>
+                    </div>
+                    <div class="table-wrapper">
+                        <table id="trips-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Vehicle ID</th>
+                                    <th>Distance</th>
+                                    <th>Fuel (L)</th>
+                                    <th>Carbon (kg CO₂)</th>
+                                    <th>Date</th>
+                                </tr>
+                            </thead>
+                            <tbody id="trips-table-body">
+                                <tr>
+                                    <td colspan="6" class="empty-state">No trip logs recorded yet.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="app-footer">
+            <p>Smart Eco-Fleet & Carbon Tracker &copy; 2026. Built with FastAPI & SQLAlchemy.</p>
+        </footer>
+    </div>
+
+    <!-- Notification Toast Container -->
+    <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+    <script src="/static/script.js"></script>
+</body>
+</html>
